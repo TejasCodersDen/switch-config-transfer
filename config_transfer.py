@@ -1,5 +1,5 @@
+import os
 import re
-
 
 # Function to read MAC address and corresponding port information from a log file
 def read_mac_port_hashmap(log_file_path):
@@ -16,9 +16,8 @@ def read_mac_port_hashmap(log_file_path):
 
     return mac_port_hashmap
 
-
 # Function to extract interface configurations from a config text using regular expressions
-def extract_interfaces(config_text, old_mac_port_hashmap):
+def extract_interfaces(config_text, old_mac_port_hashmap, new_mac_port_hashmap):
     # Define a regular expression pattern to match interface configurations
     interface_pattern = r'interface GigabitEthernet(\d+)/0/(\d+)(.*?)\!'
     matches = re.finditer(interface_pattern, config_text, re.DOTALL)
@@ -32,13 +31,17 @@ def extract_interfaces(config_text, old_mac_port_hashmap):
         interface_config = match.group(3).strip()
 
         # Check if the current interface is in the old MAC address to port hashmap
-        if current_interface in [f"GigabitEthernet{port}" for mac, port in old_mac_port_hashmap.items()]:
-            extracted_config[current_interface] = interface_config
-
-    # print(extracted_config)
+        for mac, port in old_mac_port_hashmap.items():
+            if current_interface == f"GigabitEthernet{port}":
+                # Check if the MAC address is in the new MAC address hashmap
+                new_port = new_mac_port_hashmap.get(mac)
+                if new_port is not None:
+                    print(f"Found MAC address {mac} on port {port}. Replaced with port {new_port}.")
+                    extracted_config[current_interface] = interface_config
+                else:
+                    print(f"Found MAC address {mac} on port {port}. MAC address not found in new MAC address file.")
 
     return extracted_config
-
 
 # Function to save extracted interface configurations to a file
 def save_config_to_file(extracted_config, output_file):
@@ -50,60 +53,56 @@ def save_config_to_file(extracted_config, output_file):
                 file.write(line.strip() + '\n')
             file.write("!\n")
 
-
 # Function to replace old port numbers with new port numbers in a config text
 def replace_port_numbers(config_text, old_port_to_mac, new_port_to_mac):
     updated_config = config_text
 
     # Iterate through the old MAC address to port hashmap
     for old_mac, old_port in old_port_to_mac.items():
-        print("\nold mac and port:", old_mac, old_port)
         new_port = new_port_to_mac.get(old_mac)
-        print("port number to be replaced with:", new_port)
         if new_port:
             old_interface = f"GigabitEthernet{old_port}"
             new_interface = f"GigabitEthernet{new_port}"
-            print(f"Replacing {old_interface} with {new_interface}")
-            # Replace old port numbers with new port numbers in the config text
             updated_config = updated_config.replace(old_interface, new_interface)
-
-    # print(updated_config)
+            print(f"Replaced {old_interface} with {new_interface}")
 
     return updated_config
 
-
 if __name__ == "__main__":
-    # Read old and new MAC address to port hashmaps from log files
-    old_mac_port_hashmap = read_mac_port_hashmap("old-mac-add.log")
-    new_mac_port_hashmap = read_mac_port_hashmap("new-mac-add.log")
+    # List MAC_ADD and CONFIG files
+    mac_add_files = [file for file in os.listdir("MAC_ADD") if "3850" in file]
+    config_files = [file for file in os.listdir("CONFIG") if "3850" in file]
 
-    print("old_mac_port_hashmap =", old_mac_port_hashmap)
-    print("\nnew_mac_port_hashmap =", new_mac_port_hashmap)
+    for old_mac_add_file in mac_add_files:
+        old_mac_port_hashmap = read_mac_port_hashmap(os.path.join("MAC_ADD", old_mac_add_file))
 
-    # Read the input configuration file
-    input_file = "old-config.log"
+        # Search for the corresponding new MAC file in the MAC_ADD directory based on partial matching
+        new_mac_add_file = next((file for file in os.listdir("MAC_ADD") if "9300" in file and file[:3] == old_mac_add_file[:3]), None)
 
-    # Create an output file name based on the input file name
-    output_file_prefix = input_file.split(".")[0]
-    output_file = f"{output_file_prefix}_NEW.log"
+        if new_mac_add_file:
+            new_mac_port_hashmap = read_mac_port_hashmap(os.path.join("MAC_ADD", new_mac_add_file))
 
-    with open(input_file, "r") as file:
-        config_text = file.read()
+            for old_config_file in config_files:
+                input_file = os.path.join("CONFIG", old_config_file)
+                output_file_prefix = input_file.split(".")[0]
+                output_file = f"{output_file_prefix}_NEW.log"
 
-    # Extract interface configurations and save them to a file
-    extracted_config = extract_interfaces(config_text, old_mac_port_hashmap)
-    save_config_to_file(extracted_config, "extracted_config.txt")
+                with open(input_file, "r") as file:
+                    config_text = file.read()
+                    print(f"Reading configuration from {input_file}")
 
-    print("\nExtracted configuration saved to extracted_config.txt")
+                extracted_config = extract_interfaces(config_text, old_mac_port_hashmap, new_mac_port_hashmap)
+                save_config_to_file(extracted_config, "extracted_config.txt")
+                print(f"Extracted configuration saved to extracted_config.txt")
 
-    # Read the extracted configuration from the file
-    with open("extracted_config.txt", "r") as file:
-        config_text = file.read()
+                with open("extracted_config.txt", "r") as file:
+                    config_text = file.read()
 
-    # Replace old port numbers with new port numbers and save the updated configuration to a file
-    updated_config_text = replace_port_numbers(config_text, old_mac_port_hashmap, new_mac_port_hashmap)
+                updated_config_text = replace_port_numbers(config_text, old_mac_port_hashmap, new_mac_port_hashmap)
 
-    with open(output_file, "w") as file:
-        file.write(updated_config_text)
+                with open(output_file, "w") as file:
+                    file.write(updated_config_text)
+                    print(f"Updated configuration saved to {output_file}")
 
-    print(f"\nUpdated configuration saved to {output_file}")
+        else:
+            print(f"New MAC file not found for {old_mac_add_file}")

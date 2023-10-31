@@ -1,6 +1,7 @@
 import os
 import re
 
+
 # Function to read MAC address and corresponding port information from a log file
 def read_mac_port_hashmap(log_file_path):
     with open(log_file_path, 'r') as file:
@@ -11,23 +12,26 @@ def read_mac_port_hashmap(log_file_path):
 
     # Create a dictionary (hashmap) where MAC addresses are keys and ports are values
     # Remove "Gi" and "Ti" prefixes from the port names, and exclude certain ports
-    mac_port_hashmap = {mac: port.replace("Gi", "").replace("Ti", "") for mac, _, port in mac_port_entries
+    mac_port_hashmap = {mac: port.replace("Gi", "").replace("Ti", "").replace("Fi", "") for mac, _, port in mac_port_entries
                         if port not in ["Vl1", "Po1", "CPU"]}
 
     return mac_port_hashmap
+
 
 # Function to extract interface configurations from a config text using regular expressions
 def extract_interfaces(config_text, old_mac_port_hashmap, new_mac_port_hashmap):
     # Define a regular expression pattern to match interface configurations
     interface_pattern = r'interface GigabitEthernet(\d+)/0/(\d+)(.*?)\!'
     matches = re.finditer(interface_pattern, config_text, re.DOTALL)
-
+    print(matches)
     extracted_config = {}
 
     # Iterate through the matched interface configurations
     for match in matches:
+        print(match)
         interface_group = int(match.group(1))
         current_interface = f"GigabitEthernet{interface_group}/0/{match.group(2)}"
+        print("CI",current_interface)
         interface_config = match.group(3).strip()
 
         # Check if the current interface is in the old MAC address to port hashmap
@@ -41,7 +45,13 @@ def extract_interfaces(config_text, old_mac_port_hashmap, new_mac_port_hashmap):
                 else:
                     print(f"Found MAC address {mac} on port {port}. MAC address not found in new MAC address file.")
 
+    # Additional step: Check for missing interfaces in old_mac_port_hashmap
+    for mac, port in old_mac_port_hashmap.items():
+        if f"GigabitEthernet{port}" not in extracted_config:
+            print(f"MAC address {mac} on port {port} does not have a corresponding configuration.")
+
     return extracted_config
+
 
 # Function to save extracted interface configurations to a file
 def save_config_to_file(extracted_config, output_file):
@@ -52,6 +62,7 @@ def save_config_to_file(extracted_config, output_file):
             for line in config_lines:
                 file.write(line.strip() + '\n')
             file.write("!\n")
+
 
 # Function to replace old port numbers with new port numbers in a config text
 def replace_port_numbers(config_text, old_port_to_mac, new_port_to_mac):
@@ -68,6 +79,7 @@ def replace_port_numbers(config_text, old_port_to_mac, new_port_to_mac):
 
     return updated_config
 
+
 if __name__ == "__main__":
     # List MAC_ADD and CONFIG files
     mac_add_files = [file for file in os.listdir("MAC_ADD") if "3850" in file]
@@ -77,7 +89,8 @@ if __name__ == "__main__":
         old_mac_port_hashmap = read_mac_port_hashmap(os.path.join("MAC_ADD", old_mac_add_file))
 
         # Search for the corresponding new MAC file in the MAC_ADD directory based on partial matching
-        new_mac_add_file = next((file for file in os.listdir("MAC_ADD") if "9300" in file and file[:3] == old_mac_add_file[:3]), None)
+        new_mac_add_file = next(
+            (file for file in os.listdir("MAC_ADD") if "9300" in file and file[:3] == old_mac_add_file[:3]), None)
 
         if new_mac_add_file:
             new_mac_port_hashmap = read_mac_port_hashmap(os.path.join("MAC_ADD", new_mac_add_file))

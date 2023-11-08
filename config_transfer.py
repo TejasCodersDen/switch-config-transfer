@@ -103,25 +103,38 @@ if __name__ == "__main__":
         if new_mac_add_file:
             new_mac_port_hashmap.update(read_mac_port_hashmap(os.path.join("MAC_ADD", new_mac_add_file)))
 
-    # Process config_files after building the dictionaries
+# Process config_files after building the dictionaries
     for old_config_file in config_files:
         input_file = os.path.join("CONFIG", old_config_file)
         output_file_prefix = input_file.split(".")[0]
-        output_file = f"{output_file_prefix}_NEW.log"
+        extracted_config_file = "extracted_config.txt"
 
         with open(input_file, "r") as file:
             config_text = file.read()
             print(f"Reading configuration from {input_file}")
 
         extracted_config = extract_interfaces(config_text, old_mac_port_hashmap, new_mac_port_hashmap)
-        save_config_to_file(extracted_config, "extracted_config.txt")
-        print(f"Extracted configuration saved to extracted_config.txt")
 
-        with open("extracted_config.txt", "r") as file:
-            config_text = file.read()
+        # Save the extracted configuration to a file
+        save_config_to_file(extracted_config, extracted_config_file)
+        print(f"Extracted configuration saved to {extracted_config_file}")
 
-        updated_config_text = replace_port_numbers(config_text, old_mac_port_hashmap, new_mac_port_hashmap)
+# Now process the extracted_config.txt files
+    output_folder = "OUTPUT"
+    output_file = "NEW.log"
+    extracted_config_file = "extracted_config.txt"
 
-        with open(output_file, "w") as file:
-            file.write(updated_config_text)
-            print(f"Updated configuration saved to {output_file}")
+    # Create the output folder if it doesn't exist
+    os.makedirs(output_folder, exist_ok=True)
+
+    with open(extracted_config_file, "r") as file:
+        config_text = file.read()
+
+    # Replace port numbers in the extracted configuration
+    updated_config_text = replace_port_numbers(config_text, old_mac_port_hashmap, new_mac_port_hashmap)
+
+    output_file_path = os.path.join(output_folder, output_file)
+
+    with open(output_file_path, "w") as file:
+        file.write(updated_config_text)
+        print(f"Updated configuration saved to {output_file_path}")

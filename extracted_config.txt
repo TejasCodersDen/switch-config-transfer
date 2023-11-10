@@ -1,452 +1,470 @@
 Interface GigabitEthernet1/0/1
-switchport access vlan 227
-switchport mode access
-switchport voice vlan 26
-spanning-tree portfast
+
 !
 Interface GigabitEthernet1/0/2
-switchport access vlan 265
-switchport mode access
-switchport voice vlan 26
-spanning-tree portfast
+
 !
 Interface GigabitEthernet1/0/3
-switchport access vlan 265
+switchport access vlan 800
 switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
 spanning-tree portfast
 !
 Interface GigabitEthernet1/0/4
-switchport access vlan 265
+switchport access vlan 800
 switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
 spanning-tree portfast
 !
 Interface GigabitEthernet1/0/5
-switchport access vlan 265
+switchport access vlan 800
 switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
 spanning-tree portfast
 !
 Interface GigabitEthernet1/0/6
-switchport access vlan 265
+switchport access vlan 800
 switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
 spanning-tree portfast
 !
 Interface GigabitEthernet1/0/9
-switchport access vlan 773
+switchport access vlan 800
 switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
+no lldp transmit
+no lldp receive
 spanning-tree portfast
 !
 Interface GigabitEthernet1/0/10
-switchport access vlan 265
+switchport access vlan 805
 switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
 spanning-tree portfast
 !
 Interface GigabitEthernet1/0/11
-switchport access vlan 265
+switchport access vlan 800
 switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
 spanning-tree portfast
 !
 Interface GigabitEthernet1/0/13
-switchport access vlan 265
+description 1.57A
+switchport access vlan 800
 switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
+spanning-tree portfast
+!
+Interface GigabitEthernet1/0/14
+description 1.57B
+switchport access vlan 1769
+switchport mode access
+switchport voice vlan 80
+spanning-tree portfast
+!
+Interface GigabitEthernet1/0/16
+description 1.58B
+switchport access vlan 805
+switchport mode access
+switchport voice vlan 80
 spanning-tree portfast
 !
 Interface GigabitEthernet1/0/17
-switchport access vlan 265
+description Jack_1.62A
+switchport access vlan 800
 switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
 spanning-tree portfast
 !
 Interface GigabitEthernet1/0/18
-switchport access vlan 265
+description 1.62B
+switchport access vlan 805
 switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
+spanning-tree portfast
+!
+Interface GigabitEthernet1/0/19
+description 1.63A
+switchport access vlan 805
+switchport mode access
+switchport voice vlan 80
 spanning-tree portfast
 !
 Interface GigabitEthernet1/0/20
-switchport access vlan 265
+switchport access vlan 800
 switchport mode access
-switchport voice vlan 26
-spanning-tree portfast
-!
-Interface GigabitEthernet1/0/21
-switchport access vlan 265
-switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
+no lldp transmit
+no lldp receive
 spanning-tree portfast
 !
 Interface GigabitEthernet1/0/22
-switchport access vlan 265
+switchport access vlan 805
 switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
 spanning-tree portfast
 !
 Interface GigabitEthernet1/0/23
-switchport access vlan 265
+description 1-60A
+switchport access vlan 1769
 switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
 spanning-tree portfast
 !
-Interface GigabitEthernet1/0/24
-switchport access vlan 265
+Interface GigabitEthernet1/0/27
+switchport access vlan 800
 switchport mode access
-switchport voice vlan 26
-spanning-tree portfast
-!
-Interface GigabitEthernet1/0/26
-switchport access vlan 265
-switchport mode access
-switchport voice vlan 26
-spanning-tree portfast
-!
-Interface GigabitEthernet1/0/28
-description Panopto device
-switchport access vlan 222
-switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
+no lldp transmit
+no lldp receive
 spanning-tree portfast
 !
 Interface GigabitEthernet1/0/29
-switchport access vlan 260
+switchport access vlan 805
 switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
 spanning-tree portfast
 !
 Interface GigabitEthernet1/0/30
 switchport access vlan 773
 switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
+spanning-tree portfast
+!
+Interface GigabitEthernet1/0/31
+switchport access vlan 805
+switchport mode access
+switchport voice vlan 80
 spanning-tree portfast
 !
 Interface GigabitEthernet1/0/32
-switchport access vlan 260
+switchport access vlan 800
 switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
 no lldp transmit
 no lldp receive
 spanning-tree portfast
 !
 Interface GigabitEthernet1/0/33
-switchport access vlan 260
+switchport access vlan 227
 switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
+spanning-tree portfast
+!
+Interface GigabitEthernet1/0/37
+switchport access vlan 800
+switchport mode access
+switchport voice vlan 80
 no lldp transmit
 no lldp receive
+spanning-tree portfast
+!
+Interface GigabitEthernet1/0/40
+switchport access vlan 805
+switchport mode access
+switchport voice vlan 80
+no lldp transmit
+no lldp receive
+spanning-tree portfast
+!
+Interface GigabitEthernet1/0/42
+switchport access vlan 805
+switchport mode access
+switchport voice vlan 80
 spanning-tree portfast
 !
 Interface GigabitEthernet1/0/43
-switchport access vlan 1767
+switchport access vlan 800
 switchport mode access
-switchport voice vlan 26
-spanning-tree portfast
-!
-Interface GigabitEthernet1/0/44
-description Salto Hotsport SALTO-CU4K-04C3A5
-switchport access vlan 1771
-switchport mode access
-switchport voice vlan 26
-spanning-tree portfast
-!
-Interface GigabitEthernet1/0/45
-switchport access vlan 1771
-switchport mode access
-switchport voice vlan 26
-spanning-tree portfast
-!
-Interface GigabitEthernet1/0/47
-switchport access vlan 265
-switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
+no lldp transmit
+no lldp receive
 spanning-tree portfast
 !
 Interface GigabitEthernet1/0/48
-switchport access vlan 265
+switchport access vlan 805
 switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
 spanning-tree portfast
 !
-Interface GigabitEthernet3/0/1
-description AVX-13
-switchport access vlan 265
+Interface GigabitEthernet2/0/19
+switchport access vlan 800
 switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
 spanning-tree portfast
 !
-Interface GigabitEthernet3/0/2
-description AVX-14
-switchport access vlan 265
+Interface GigabitEthernet2/0/25
+switchport access vlan 1769
 switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
 spanning-tree portfast
 !
-Interface GigabitEthernet3/0/3
-description AVX-15
-switchport access vlan 265
+Interface GigabitEthernet2/0/26
+switchport access vlan 1769
 switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
 spanning-tree portfast
 !
-Interface GigabitEthernet3/0/5
-description AVX-17
-switchport access vlan 265
+Interface GigabitEthernet2/0/29
+description VARSI 113 MLC AV01A
+switchport access vlan 805
 switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
 spanning-tree portfast
 !
-Interface GigabitEthernet3/0/7
-description FAC-JACE-AAH-1stFloor
-switchport access vlan 265
+Interface GigabitEthernet2/0/32
+description AT-MS-QSC_Jack1.1-AV04C_20210820WH
+switchport access vlan 1769
 switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
+spanning-tree portfast
+!
+Interface GigabitEthernet2/0/33
+switchport access vlan 805
+switchport mode access
+switchport voice vlan 80
+spanning-tree portfast
+!
+Interface GigabitEthernet2/0/40
+switchport access vlan 800
+switchport mode access
+switchport voice vlan 80
+no lldp transmit
+no lldp receive
+spanning-tree portfast
+!
+Interface GigabitEthernet2/0/47
+description Fire Alarm 1
+switchport access vlan 199
+switchport mode access
+spanning-tree portfast
+!
+Interface GigabitEthernet2/0/48
+description Fire Alarm 2
+switchport access vlan 805
+switchport mode access
+switchport voice vlan 80
+spanning-tree portfast
+!
+Interface GigabitEthernet3/0/6
+switchport access vlan 805
+switchport mode access
+switchport voice vlan 80
 spanning-tree portfast
 !
 Interface GigabitEthernet3/0/9
-
-!
-Interface GigabitEthernet3/0/12
-switchport access vlan 265
+switchport access vlan 805
 switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
 spanning-tree portfast
 !
-Interface GigabitEthernet3/0/13
-switchport access vlan 265
+Interface GigabitEthernet3/0/10
+switchport access vlan 805
 switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
 spanning-tree portfast
 !
-Interface GigabitEthernet3/0/14
-switchport access vlan 265
+Interface GigabitEthernet3/0/11
+description AT-MS-AV_Jack114-1.1A_20210820WH
+switchport access vlan 805
 switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
 spanning-tree portfast
 !
-Interface GigabitEthernet3/0/15
-switchport access vlan 265
+Interface GigabitEthernet3/0/18
+switchport access vlan 800
 switchport mode access
-switchport voice vlan 26
-spanning-tree portfast
-!
-Interface GigabitEthernet3/0/16
-switchport access vlan 265
-switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
 spanning-tree portfast
 !
 Interface GigabitEthernet3/0/19
-switchport access vlan 265
+switchport access vlan 1767
 switchport mode access
-switchport voice vlan 26
-spanning-tree portfast
-!
-Interface GigabitEthernet3/0/20
-switchport access vlan 265
-switchport mode access
-switchport voice vlan 26
-spanning-tree portfast
-!
-Interface GigabitEthernet3/0/21
-switchport access vlan 265
-switchport mode access
-switchport voice vlan 26
-spanning-tree portfast
-!
-Interface GigabitEthernet3/0/22
-switchport access vlan 265
-switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
 spanning-tree portfast
 !
 Interface GigabitEthernet3/0/23
-switchport access vlan 265
+switchport access vlan 805
 switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
 spanning-tree portfast
 !
-Interface GigabitEthernet3/0/30
-switchport access vlan 265
+Interface GigabitEthernet3/0/25
+switchport access vlan 805
 switchport mode access
-switchport voice vlan 260
+switchport voice vlan 80
+spanning-tree portfast
+!
+Interface GigabitEthernet3/0/28
+switchport access vlan 805
+switchport mode access
+switchport voice vlan 80
+spanning-tree portfast
+!
+Interface GigabitEthernet3/0/29
+switchport access vlan 805
+switchport mode access
+switchport voice vlan 80
 spanning-tree portfast
 !
 Interface GigabitEthernet3/0/31
-switchport access vlan 265
+switchport access vlan 805
 switchport mode access
-switchport voice vlan 260
+switchport voice vlan 80
 spanning-tree portfast
 !
 Interface GigabitEthernet3/0/32
-switchport access vlan 265
+switchport access vlan 805
 switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
 spanning-tree portfast
 !
 Interface GigabitEthernet3/0/33
-switchport access vlan 265
+switchport access vlan 805
 switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
 spanning-tree portfast
 !
 Interface GigabitEthernet3/0/34
-switchport access vlan 265
+switchport access vlan 805
 switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
 spanning-tree portfast
 !
 Interface GigabitEthernet3/0/35
-switchport access vlan 265
+switchport access vlan 805
 switchport mode access
-switchport voice vlan 26
-spanning-tree portfast
-!
-Interface GigabitEthernet3/0/36
-switchport access vlan 265
-switchport mode access
-switchport voice vlan 26
-spanning-tree portfast
-!
-Interface GigabitEthernet3/0/37
-switchport access vlan 265
-switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
 spanning-tree portfast
 !
 Interface GigabitEthernet3/0/38
-switchport access vlan 265
+switchport access vlan 805
 switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
 spanning-tree portfast
 !
 Interface GigabitEthernet3/0/39
-switchport access vlan 265
+switchport access vlan 805
 switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
 spanning-tree portfast
 !
-Interface GigabitEthernet3/0/40
-switchport access vlan 265
+Interface GigabitEthernet3/0/41
+switchport access vlan 805
 switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
 spanning-tree portfast
 !
 Interface GigabitEthernet3/0/42
-description IPCamera-Cam002
-switchport access vlan 1767
+switchport access vlan 805
 switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
 spanning-tree portfast
 !
 Interface GigabitEthernet3/0/43
-description IPCamera-Cam003
-switchport access vlan 1767
+switchport access vlan 805
 switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
 spanning-tree portfast
 !
-Interface GigabitEthernet3/0/45
-description IPCamera-Cam005
-switchport access vlan 1767
+Interface GigabitEthernet3/0/44
+switchport access vlan 805
 switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
 spanning-tree portfast
 !
-Interface GigabitEthernet3/0/46
-description IPCamera-Cam006
-switchport access vlan 1767
+Interface GigabitEthernet4/0/2
+switchport access vlan 800
 switchport mode access
-switchport voice vlan 26
-spanning-tree portfast
-!
-Interface GigabitEthernet3/0/47
-description IPCamera-Cam007
-switchport access vlan 1767
-switchport mode access
-switchport voice vlan 26
-spanning-tree portfast
-!
-Interface GigabitEthernet3/0/48
-description IPCamera-Cam008
-switchport access vlan 1767
-switchport mode access
-switchport voice vlan 26
-spanning-tree portfast
-!
-Interface GigabitEthernet4/0/6
-switchport access vlan 1767
-switchport mode access
-switchport voice vlan 26
-spanning-tree portfast
-!
-Interface GigabitEthernet4/0/8
-switchport access vlan 265
-switchport mode access
-switchport voice vlan 26
-spanning-tree portfast
-!
-Interface GigabitEthernet4/0/13
-switchport access vlan 260
-switchport mode access
-switchport voice vlan 26
-spanning-tree portfast
-!
-Interface GigabitEthernet4/0/14
-switchport access vlan 260
-switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
 no lldp transmit
 no lldp receive
 spanning-tree portfast
 !
-Interface GigabitEthernet4/0/16
-switchport access vlan 260
+Interface GigabitEthernet4/0/3
+switchport access vlan 800
 switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
 no lldp transmit
 no lldp receive
 spanning-tree portfast
 !
-Interface GigabitEthernet4/0/22
-switchport access vlan 260
+Interface GigabitEthernet4/0/5
+switchport access vlan 800
 switchport mode access
-switchport voice vlan 26
-spanning-tree portfast
-!
-Interface GigabitEthernet4/0/41
-switchport access vlan 260
-switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
 no lldp transmit
 no lldp receive
 spanning-tree portfast
 !
-Interface GigabitEthernet4/0/45
-switchport access vlan 10
+Interface GigabitEthernet4/0/9
+switchport access vlan 800
+switchport mode access
+switchport voice vlan 80
+no lldp transmit
+no lldp receive
+spanning-tree portfast
+!
+Interface GigabitEthernet4/0/10
+switchport access vlan 800
+switchport mode access
+switchport voice vlan 80
+no lldp transmit
+no lldp receive
+spanning-tree portfast
+!
+Interface GigabitEthernet4/0/15
+switchport access vlan 800
+switchport mode access
+switchport voice vlan 80
+no lldp transmit
+no lldp receive
+spanning-tree portfast
+!
+Interface GigabitEthernet4/0/17
+switchport access vlan 800
+switchport mode access
+switchport voice vlan 80
+no lldp transmit
+no lldp receive
+spanning-tree portfast
+!
+Interface GigabitEthernet4/0/18
+switchport access vlan 800
+switchport mode access
+switchport voice vlan 80
+no lldp transmit
+no lldp receive
+spanning-tree portfast
+!
+Interface GigabitEthernet4/0/19
+switchport access vlan 800
+switchport mode access
+switchport voice vlan 80
+no lldp transmit
+no lldp receive
+spanning-tree portfast
+!
+Interface GigabitEthernet4/0/21
+description Talkaphone-AdobeLodge8
+switchport access vlan 80
 switchport mode access
 spanning-tree portfast
 !
-Interface GigabitEthernet4/0/46
-switchport access vlan 10
+Interface GigabitEthernet4/0/27
+switchport access vlan 227
 switchport mode access
+switchport voice vlan 80
 spanning-tree portfast
 !
 Interface GigabitEthernet4/0/47
-description FireAlarm 1
-switchport access vlan 199
+switchport access vlan 10
 switchport mode access
-switchport voice vlan 26
+switchport voice vlan 80
 spanning-tree portfast
 !
 Interface GigabitEthernet4/0/48
-description FireAlarm 2
-switchport access vlan 265
+switchport access vlan 10
 switchport mode access
-switchport voice vlan 26
 spanning-tree portfast
 !

@@ -1,10 +1,22 @@
 import os
 import re
+import sys
+
+
+# Function to initialize logging
+def initialize_logging():
+    logs_folder = "LOG"
+    os.makedirs(logs_folder, exist_ok=True)
+    log_file_path = os.path.join(logs_folder, "logs.txt")
+
+    # Redirect standard output to the log file
+    sys.stdout = open(log_file_path, "w")
+    print(f"Logging started. Log file: {log_file_path}")
 
 
 # Function to read MAC address and corresponding port information from a log file
-def read_mac_port_hashmap(log_file_path):
-    with open(log_file_path, 'r') as file:
+def read_mac_port_hashmap(mac_add_file):
+    with open(mac_add_file, 'r') as file:
         log_contents = file.read()
 
     # Use regular expressions to extract MAC address, entry type (STATIC or DYNAMIC), and port
@@ -35,7 +47,7 @@ def extract_interfaces(config_text, old_mac_port_hashmap, new_mac_port_hashmap):
     for match in matches:
         interface_group = int(match.group(1))
         current_interface = f"GigabitEthernet{interface_group}/0/{match.group(2)}"
-        port_no = str(interface_group)+"/0/"+str(match.group(2))
+        port_no = str(interface_group) + "/0/" + str(match.group(2))
         interface_config = match.group(3).strip()
 
         # Check if the current interface is in the old MAC address to port hashmap
@@ -45,18 +57,11 @@ def extract_interfaces(config_text, old_mac_port_hashmap, new_mac_port_hashmap):
                 # Check if the MAC address is in the new MAC address hashmap
                 new_port = new_mac_port_hashmap.get(mac)
                 if new_port is not None:
-                    print(f"Found MAC address {mac} on port {port}. Replaced with port {new_port}.")
+                    print(f"Found MAC address in 3850 {mac} - {port}. On 9300 port is {new_port}.")
                     extracted_config[current_interface] = interface_config
                     count += 1
                     break
-                else:
-                    print(f"Found MAC address {mac} on port {port}. MAC address not found in new MAC address file.")
-
-    # Additional step: Check for missing interfaces in old_mac_port_hashmap
-    for mac, port in old_mac_port_hashmap.items():
-        if f"{port}" not in extracted_config:
-            print(f"MAC address {mac} on port {port} does not have a corresponding configuration.")
-    print(count)
+    print("Total Count: ", count)
     return extracted_config
 
 
@@ -73,21 +78,24 @@ def save_config_to_file(extracted_config, output_file):
 
 # Function to replace old port numbers with new port numbers in a config text
 def replace_port_numbers(config_text, old_port_to_mac, new_port_to_mac):
+    count = 0
     updated_config = config_text
-
     # Iterate through the old MAC address to port hashmap
     for old_mac, old_port in old_port_to_mac.items():
         new_port = new_port_to_mac.get(old_mac)
         if new_port:
-            old_interface = f"{old_port}"
-            new_interface = f"{new_port}"
-            updated_config = updated_config.replace(old_interface, new_interface)
-            print(f"Replaced {old_interface} with {new_interface}")
-
+            # Use regular expression to match whole words
+            pattern = re.compile(r'\b' + re.escape(old_port) + r'\b')
+            updated_config = pattern.sub(new_port, updated_config)
+            print(f"Replaced {old_port} with {new_port}")
+            count += 1
+    print("Total Count: ", count)
     return updated_config
 
 
 if __name__ == "__main__":
+
+    initialize_logging()
 
     # List MAC_ADD and CONFIG files
     mac_add_files = [file for file in os.listdir("MAC_ADD") if "3850" in file]
@@ -103,7 +111,7 @@ if __name__ == "__main__":
         if new_mac_add_file:
             new_mac_port_hashmap.update(read_mac_port_hashmap(os.path.join("MAC_ADD", new_mac_add_file)))
 
-# Process config_files after building the dictionaries
+    # Process config_files after building the dictionaries
     for old_config_file in config_files:
         input_file = os.path.join("CONFIG", old_config_file)
         output_file_prefix = input_file.split(".")[0]
@@ -119,22 +127,19 @@ if __name__ == "__main__":
         save_config_to_file(extracted_config, extracted_config_file)
         print(f"Extracted configuration saved to {extracted_config_file}")
 
-# Now process the extracted_config.txt files
+    with open(extracted_config_file, "r") as file:
+        config_text = file.read()
+    # Replace port numbers in the extracted configuration
+    updated_config_text = replace_port_numbers(config_text, old_mac_port_hashmap, new_mac_port_hashmap)
+
+    # Now process the extracted_config.txt files
     output_folder = "OUTPUT"
-    output_file = "NEW.log"
+    output_file = "NEW_9300_config.txt"
     extracted_config_file = "extracted_config.txt"
 
     # Create the output folder if it doesn't exist
     os.makedirs(output_folder, exist_ok=True)
-
-    with open(extracted_config_file, "r") as file:
-        config_text = file.read()
-
-    # Replace port numbers in the extracted configuration
-    updated_config_text = replace_port_numbers(config_text, old_mac_port_hashmap, new_mac_port_hashmap)
-
     output_file_path = os.path.join(output_folder, output_file)
-
     with open(output_file_path, "w") as file:
         file.write(updated_config_text)
         print(f"Updated configuration saved to {output_file_path}")
